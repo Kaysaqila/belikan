@@ -8,129 +8,93 @@
 </head>
 <body>
 
-                <div class="w-full">
-                    <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
+               <div class="w-full">
+                <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-inner h-[600px]"> <!-- Atur tinggi sesuai keinginan -->
-                        <div class="carousel-item active" data-bs-interval="3000">
+                    <div class="carousel-item active" data-bs-interval="3000">
                         <img src="{{ asset('images/ikan1.png') }}" class="d-block w-100 h-full object-cover" alt="...">
-                        </div>
-                        <div class="carousel-item" data-bs-interval="3000">
-                        <img src="{{ asset('images/ikan2.png') }}" class="d-block w-100 h-full object-cover" alt="...">
-                        </div>
-                        <div class="carousel-item" data-bs-interval="3000">
-                        <img src="{{ asset('images/ikan3.png') }}" class="d-block w-100 h-full object-cover" alt="...">
-                        </div>
-                        <!-- tombol panah -->
-                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Previous</span>
-                        </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Next</span>
-                        </button>
                     </div>
+                    <div class="carousel-item" data-bs-interval="3000">
+                        <img src="{{ asset('images/ikan2.png') }}" class="d-block w-100 h-full object-cover" alt="...">
+                    </div>
+                    <div class="carousel-item" data-bs-interval="3000">
+                        <img src="{{ asset('images/ikan3.png') }}" class="d-block w-100 h-full object-cover" alt="...">
+                    </div>
+                    </div> <!-- end carousel-inner -->
+                </div>
                 </div>
 
-                <div class="container mt-5">
-                    <h3 class="mb-4">Produk Terlaris (Stok Tersedikit)</h3>
-                    <div id="topProductsCarousel" class="carousel slide">
+
+                <div class="container mt-3">
+                    <div class="d-flex align-items-center justify-content-center mb-4">
+                        <hr style="flex-grow: 1; border: none; border-top: 2px solid black; margin: 0 15px;">
+                        <h3 class="fw-bold mb-0">PRODUK TERLARIS</h3>
+                        <hr style="flex-grow: 1; border: none; border-top: 2px solid black; margin: 0 15px;">
+                    </div>
+
+                    <div id="topProductsCarousel" class="carousel slide my-4" data-bs-ride="carousel">
                         <div class="carousel-inner">
-                            @foreach ($topProducts->chunk(4) as $chunkIndex => $productChunk)
-                                <div class="carousel-item {{ $chunkIndex == 0 ? 'active' : '' }}">
-                                    <div class="d-flex justify-content-center gap-4">
-                                        @foreach ($productChunk as $product)
-                                        <a href="{{ route('jenis.show', $product->id) }}" class="text-decoration-none">
-                                            <div class="card" style="width: 16rem;">
-                                                <img src="{{ asset('storage/' . $product->image) }}" class="card-img-top" alt="{{ $product->name }}">
-                                                <div class="card-body text-center">
-                                                    <h5 class="card-title">{{ $product->name }}</h5>
-                                                    <p class="card-text">Rp{{ number_format($product->price, 0, ',', '.') }}</p>
-                                                    <p class="card-text"><small class="text-muted">Sisa stok: {{ $product->stock }}</small></p>
-                                                </div>
-                                            </div>
-                                        @endforeach
+                        @foreach ($topProducts->chunk(4) as $chunkIndex => $productChunk)
+                        <div class="carousel-item {{ $chunkIndex == 0 ? 'active' : '' }}">
+                            <div class="d-flex flex-wrap justify-content-center gap-4">
+                                @foreach ($productChunk as $product)
+                                <a href="{{ route('jenis.show', $product->id) }}" class="text-decoration-none">
+                                    <div class="card p-3" style="width: 16rem;">
+                                        <img src="{{ asset('storage/' . $product->image) }}" class="card-img-top" alt="{{ $product->name }}" style="height: 200px; object-fit: cover;">
+                                        <div class="card-body text-center">
+                                            <h5 class="card-title">{{ $product->name }}</h5>
+                                            <p class="card-text">Rp{{ number_format($product->price, 0, ',', '.') }}</p>
+                                            <p class="card-text"><small class="text-muted">Sisa stok: {{ $product->stock }}</small></p>
+                                        </div>
                                     </div>
-                                </div>
-                            @endforeach
+                                </a>
+                                @endforeach
+                            </div>
                         </div>
+                    @endforeach
+                        </div>
+
                         <button class="carousel-control-prev" type="button" data-bs-target="#topProductsCarousel" data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Sebelumnya</span>
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Sebelumnya</span>
                         </button>
                         <button class="carousel-control-next" type="button" data-bs-target="#topProductsCarousel" data-bs-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Selanjutnya</span>
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Selanjutnya</span>
                         </button>
                     </div>
                 </div>
 
-                <div class="gambir">
-                <!-- Scrollable image -->
-                <div class="image-scroll">
-                    <img src="{{ asset('images/sticky.jpg') }}" class="w-full h-auto" alt="...">
-                </div>
 
-                <!-- Fixed card on top -->
-                <div class="card-overlay flex justify-center items-center">
-                    <div class="scroll-wrapper flex gap-4">
-                        <a href="{{ route('jenis.index') }}">
-                            <div class="relative w-48 h-64 rounded-lg overflow-hidden shadow-lg bg-cover bg-center"
-                                style="background-image: url('{{ asset('images/jenis.jpg') }}')">
-                                <div class="absolute bottom-10 w-full bg-black bg-opacity-50 text-white text-center py-2 font-bold">
-                                    JENIS
-                                </div>
-                            </div>
-                        </a>
-                        <a href="{{ route('aquarium.index') }}">
-                                <div class="relative w-48 h-64 rounded-lg overflow-hidden shadow-lg bg-cover bg-center"
-                                    style="background-image: url('{{ asset('images/aquarium.jpg') }}')">
-                                    <div class="absolute bottom-10 w-full bg-black bg-opacity-50 text-white text-center py-2 font-bold">
-                                        AQUARIUM
-                                    </div>
-                                </div>
-                            </a>
-                            <a href="{{ route('perawatan.index') }}">
-                                <div class="relative w-48 h-64 rounded-lg overflow-hidden shadow-lg bg-cover bg-center"
-                                    style="background-image: url('{{ asset('images/perawatan.jpg') }}')">
-                                    <div class="absolute bottom-10 w-full bg-black bg-opacity-50 text-white text-center py-2 font-bold">
-                                        PERAWATAN
-                                    </div>
-                                </div>
-                            </a>
-                            <a href="{{ route('aksesoris.index') }}">
-                                <div class="relative w-48 h-64 rounded-lg overflow-hidden shadow-lg bg-cover bg-center"
-                                    style="background-image: url('{{ asset('images/aksesoris.jpg') }}')">
-                                    <div class="absolute bottom-10 w-full bg-black bg-opacity-50 text-white text-center py-2 font-bold">
-                                        AKSESORIS
-                                    </div>
-                                </div>
-                            </a>
-                    </div>
-                </div>
+                <livewire:parallax-section />
+                
             </div>
 
-              <div class="container mt-5">
-                    <h3 class="mb-4">Produk Terlaris (Stok Tersedikit)</h3>
-                    <div id="topProductsCarousel" class="carousel slide">
-                        <div class="carousel-inner">
-                            @foreach ($topProducts->chunk(4) as $chunkIndex => $productChunk)
-                                <div class="carousel-item {{ $chunkIndex == 0 ? 'active' : '' }}">
-                                    <div class="d-flex justify-content-center gap-4">
-                                        @foreach ($productChunk as $product)
-                                        <a href="{{ route('jenis.show', $product->id) }}" class="text-decoration-none">
-                                            <div class="card" style="width: 16rem;">
-                                                <img src="{{ asset('storage/' . $product->image) }}" class="card-img-top" alt="{{ $product->name }}">
-                                                <div class="card-body text-center">
-                                                    <h5 class="card-title">{{ $product->name }}</h5>
-                                                    <p class="card-text">Rp{{ number_format($product->price, 0, ',', '.') }}</p>
-                                                    <p class="card-text"><small class="text-muted">Sisa stok: {{ $product->stock }}</small></p>
+              <div class="container mt-3">
+                    <h3 class="mb-4 text-center fw-bold">PRODUK TERLARIS</h3>
+                        <div id="topProductsCarousel" class="carousel slide my-4">
+                            <div class="carousel-inner">
+                                @foreach ($topProducts->chunk(4) as $chunkIndex => $productChunk)
+                                    <div class="carousel-item {{ $chunkIndex == 0 ? 'active' : '' }}">
+                                        <div class="d-flex flex-wrap justify-content-center gap-4">
+                                            @foreach ($productChunk as $product)
+                                            <a href="{{ route('jenis.show', $product->id) }}" class="text-decoration-none">
+                                                <div class="card p-3" style="width: 16rem;">
+                                                    <img src="{{ asset('storage/' . $product->image) }}" class="card-img-top" alt="{{ $product->name }}" style="height: 200px; object-fit: cover;">
+                                                    <div class="card-body text-center">
+                                                        <h5 class="card-title">{{ $product->name }}</h5>
+                                                        <p class="card-text">Rp{{ number_format($product->price, 0, ',', '.') }}</p>
+                                                        <p class="card-text">
+                                                            <small class="text-muted">Sisa stok: {{ $product->stock }}</small>
+                                                        </p>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        @endforeach
+                                            </a>
+                                            @endforeach
+                                        </div>
                                     </div>
-                                </div>
-                            @endforeach
+                                @endforeach
+                            </div>
                         </div>
                         <button class="carousel-control-prev" type="button" data-bs-target="#topProductsCarousel" data-bs-slide="prev">
                             <span class="carousel-control-prev-icon" aria-hidden="true"></span>

@@ -55,11 +55,11 @@
     <!-- Hero Section -->
     <section class="relative w-full h-[500px]">
         <div class="absolute inset-0 bg-black"></div>
-            <div class="absolute top-0 w-full h-[65%] flex flex-col justify-center items-start pl-64 mb-4 mt-4" data-aos="fade-right" data-aos-duration="1000" data-aos-delay="200">
-                <h1 class="text-3xl font-bold text-white">WELCOME TO</h1>
+            <div class="absolute top-0 ml-30 -full h-[65%] flex flex-col justify-center items-start pl-64 mb-4 mt-4" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="200">
+                <!-- <h1 class="text-3xl font-bold text-white">WELCOME TO</h1> -->
                 <img src="{{ asset('images/logo.png') }}" alt="Belikan Logo" class="items-center h-32">
             </div>
-            <div class="absolute top-3 left-[60%] transform -translate-x-1/2 z-10 animated-element" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="200">
+            <div class="absolute left-[60%] transform -translate-x-1/2 z-10 animated-element" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="200">
                 <img src="{{ asset('images/cupangk.png') }}" alt="Cupang" class="h-[550px] w-auto object-cover">
             </div>
         <!-- Bagian Bawah (Ekor) dengan Gradient biar smooth -->
@@ -69,11 +69,11 @@
 
     <!-- Gallery Section -->
    <section class="py-10 bg-gradient-to-t from-[#0b1b2f] to-[#0b1b2f]">
-    <div class="max-w-screen-lg mx-auto">
-        <div class="grid grid-cols-3 gap-x-6 justify-items-center" data-aos="fade-up" data-aos-anchor-placement="center-bottom">
-            <img src="{{ asset('images/buntal_landing.jpg') }}" alt="Fish 1" class="w-64 h-60 object-cover">
-            <img src="{{ asset('images/singa_landing.jpg') }}" alt="Fish 2" class="w-64 h-60 object-cover">
-            <img src="{{ asset('images/nemo_landing.jpg') }}" alt="Fish 3" class="w-64 h-60 object-cover">
+    <div class="max-w-screen-lg mx-auto ">
+        <div class="grid grid-cols-3 gap-x-6 justify-items-center mt-10" data-aos="fade-up" data-aos-anchor-placement="center-bottom">
+            <img src="{{ asset('images/buntal_landing.jpg') }}" alt="Fish 1" class="w-64 h-60 object-cover rounded-xl shadow-lg white-shadow ">
+            <img src="{{ asset('images/singa_landing.jpg') }}" alt="Fish 2" class="w-64 h-60 object-cover rounded-xl shadow-lg ">
+            <img src="{{ asset('images/nemo_landing.jpg') }}" alt="Fish 3" class="w-64 h-60 object-cover rounded-xl shadow-lg ">
         </div>
         <div>
             <div class="w-4/5 mx-auto p-6 mt-40 rounded-lg text-2xl text-left" data-aos="fade-up" data-aos-anchor-placement="center-bottom">
@@ -86,7 +86,7 @@
     <!-- Info Section -->
     <section class="py-10 bg-gradient-to-t from-[#050D1A] to-[#0b1b2f] text-center">
        <div class="grid grid-cols-2 w-3/4 mx-auto rounded-lg gap-x-6 items-center">
-            <img src="{{ asset('images/landing.jpg') }}" alt="Fish 1" class="w-[50%] h-[65%] object-cover m-auto" data-aos="zoom-out-right" data-aos-anchor-placement="center-bottom">
+            <img src="{{ asset('images/landing.jpg') }}" alt="Fish 1" class="w-[50%] h-[65%] object-cover m-auto rounded-xl shadow-lg" data-aos="zoom-out-right" data-aos-anchor-placement="center-bottom">
             <div>
                 <ul class="text-2xl m-auto text-left space-y-8" data-aos="zoom-out-left" data-aos-anchor-placement="center-bottom">
                     <li class="circle-checkmark">Ikan sehat dan bebas penyakit</li>

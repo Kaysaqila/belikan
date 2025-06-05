@@ -29,3 +29,5 @@
     
 </div>
 </x-app-layout>
+
+<!-- ini knp ada 2 ya wak.. -->

@@ -20,18 +20,21 @@ class CheckoutComponent extends Component
     public bool $showEditAddress = false;
     public bool $showVoucher = false;
     public bool $showOpsiKirim = false;
+    public $selectedShippingOption = null;
     public $paymentMethod;
     public $voucherApplied = false; // opsional, kalau mau tandai berhasil atau belum
 
     public $shippingAddress, $shippingNumber, $shippingName, $note;
 
     protected $listeners = [
-        'paymentMethodUpdated' => 'updatePaymentMethod', //update metode pembayaran
+        'paymentMethodUpdated' => 'updatePaymentMethod', // update metode pembayaran
+        'shippingOptionUpdated' => 'updateShippingOption', // update opsi kirim
         'closePaymentModal' => 'closePaymentModal',
         'closeEditAddressModal' => 'closeEditAddressModal',
         'closeVoucher' => 'closeVoucher',
+        'closeOpsiKirim' => 'closeOpsiKirim', 
         'addressUpdated' => 'refreshShippingData',
-        'voucherApplied' => 'handleVoucherApplied', //update harga setelah ada voucher
+        'voucherApplied' => 'handleVoucherApplied', // update harga setelah ada voucher
     ];
 
     public function mount()
@@ -104,29 +107,41 @@ class CheckoutComponent extends Component
             'total_amount' => $total,
             'voucher_code' => $voucherCode,
             'voucher_discount' => $voucherDiscount,
+            'shipping_method' => $this->selectedShippingOption,
+            'payment_method' => $this->paymentMethod,
             'status' => 'pending',
         ]);
 
-        // Dapatkan alamat default user
-        $defaultAddress = ShippingAddress::where('user_id', Auth::id())
-            ->whereNull('order_id')
-            ->first();
+        // Simpan item ke OrderItem dan kurangi stok produk
+        foreach ($cartItems as $item) {
+            OrderItem::create([
+                'order_id' => $order->id,
+                'product_id' => $item->product_id,
+                'quantity' => $item->quantity,
+                'price' => $item->product->price,
+            ]);
 
-        // Buat alamat spesifik untuk order ini
-        ShippingAddress::create([
-            'order_id' => $order->id, // order_id wajib diisi
-            'user_id' => Auth::id(),
-            'recipient_name' => $defaultAddress ? $defaultAddress->recipient_name : $this->shippingName,
-            'address' => $defaultAddress ? $defaultAddress->address : $this->shippingAddress,
-            'phone_number' => $defaultAddress ? $defaultAddress->phone_number : $this->shippingNumber,
-            'note' => $this->note,
-        ]);
+            // Kurangi stok produk
+            $item->product->decrement('stock', $item->quantity);
+        }
+
+        // Hanya buat/mengupdate shipping address JIKA BELUM ADA untuk order ini
+        ShippingAddress::updateOrCreate(
+            ['order_id' => $order->id],
+            [
+                'user_id' => Auth::id(),
+                'recipient_name' => $this->shippingName,
+                'address' => $this->shippingAddress,
+                'phone_number' => $this->shippingNumber,
+                'note' => $this->note,
+            ]
+        );
 
         // Hapus item cart
         Cart::whereIn('id', $selectedCartIds)->delete();
 
         session()->flash('success', 'Pesanan berhasil dibuat!');
-        return redirect('/checkout/success');
+        return redirect()->route('checkout.success');
     }
 
     public function handleVoucherApplied($discount, $code)
@@ -150,6 +165,31 @@ class CheckoutComponent extends Component
         $this->totalAfterDiscount = $this->total;
         $this->voucherApplied = false;
     }
+
+    public function updatePaymentMethod($method)
+    {
+        $this->paymentMethod = $method;
+        $this->showEditPayment = false;
+    }
+
+    public function updateShippingOption($option)
+    {
+        $this->selectedShippingOption = $option;
+        $this->showOpsiKirim = false;
+    }
+
+    public $shippingOptions = [
+        'reguler' => [
+            'label' => 'Reguler',
+            'price' => 15000,
+            'guarantee' => '2-3 hari kerja'
+        ],
+        'hemat' => [
+            'label' => 'Hemat',
+            'price' => 11000,
+            'guarantee' => '3-5 hari kerja'
+        ]
+    ];
 
     public function render()
     {
@@ -194,11 +234,5 @@ class CheckoutComponent extends Component
     public function closeOpsiKirim()
     {
         $this->showOpsiKirim = false;
-    }
-
-    public function updatePaymentMethod($method)
-    {
-        $this->paymentMethod = $method;
-        $this->showEditPayment = false;
     }
 }

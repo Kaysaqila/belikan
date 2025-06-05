@@ -1,51 +1,51 @@
 <nav x-data="{ open: false }" class="bg-gradient-to-r from-[#0f172a] to-[#4c1d95] border-b border-[#1e293b] text-white">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between h-16">
-            <div class="flex items-center">
-                <!-- Logo -->
-                <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
+        <div class="flex justify-between h-16 items-center">
+            <!-- Logo -->
+            <div class="shrink-0 flex items-center">
+                <a href="{{ route('dashboard') }}">
                     <div class="flex items-center space-x-2">
                         <img src="{{ asset('images/logo.png') }}" alt="Belikan Logo" class="h-11 mb-4 mt-4 ml-4">
                     </div>
-                    </a>
-                </div>
+                </a>
+            </div>
 
-                <!-- Navigation Links -->
-                <div class="hidden sm:flex sm:space-x-6 sm:ml-10">
-                    <x-nav-link href="{{ route('jenis.index') }}" :active="request()->routeIs('jenis.index')" class="text-white hover:text-yellow-400">
-                        {{ __('JENIS') }}
-                    </x-nav-link>
-                    <x-nav-link href="{{ route('aquarium.index') }}" :active="request()->routeIs('aquarium.index')" class="text-white hover:text-yellow-400">
-                        {{ __('AQUARIUM') }}
-                    </x-nav-link>
-                    <x-nav-link href="{{ route('perawatan.index') }}" :active="request()->routeIs('perawatan.index')" class="text-white hover:text-yellow-400">
-                        {{ __('PERAWATAN') }}
-                    </x-nav-link>
-                    <x-nav-link href="{{ route('aksesoris.index') }}" :active="request()->routeIs('aksesoris.index')" class="text-white hover:text-yellow-400">
-                        {{ __('AKSESORIS') }}
-                    </x-nav-link>
-                </div>
+            <!-- Navigation Links (centered) -->
+            <div class="hidden sm:flex sm:space-x-6 flex-grow justify-center">
+                <x-nav-link href="{{ route('jenis.index') }}" :active="request()->routeIs('jenis.index')" class="text-white hover:text-yellow-400">
+                    {{ __('JENIS') }}
+                </x-nav-link>
+                <x-nav-link href="{{ route('aquarium.index') }}" :active="request()->routeIs('aquarium.index')" class="text-white hover:text-yellow-400">
+                    {{ __('AQUARIUM') }}
+                </x-nav-link>
+                <x-nav-link href="{{ route('perawatan.index') }}" :active="request()->routeIs('perawatan.index')" class="text-white hover:text-yellow-400">
+                    {{ __('PERAWATAN') }}
+                </x-nav-link>
+                <x-nav-link href="{{ route('aksesoris.index') }}" :active="request()->routeIs('aksesoris.index')" class="text-white hover:text-yellow-400">
+                    {{ __('AKSESORIS') }}
+                </x-nav-link>
             </div>
 
             <!-- Right side dropdowns -->
-            <div class="hidden sm:flex sm:items-center sm:ml-6">
-                <!-- ... (tidak diubah, kecuali hover) -->
+            <div class="hidden sm:flex sm:items-center sm:space-x-6">
+                <!-- Search -->
                 <form>
                     <input type="text" name="cari" placeholder="Search"
                         class="bg-transparent border border-white rounded-full px-4 py-1 text-white placeholder-white focus:outline-none focus:ring-2 focus:ring-yellow-400 w-36 sm:w-48" />
                 </form>
 
-                <div class="ml-3 relative">
-                    <a href="{{ route('cart.index') }}" class="inline-flex items-center px-3 py-2 border border-transparent text-sm rounded-md text-white hover:text-yellow-400 transition">
+                <!-- Cart -->
+                <div class="relative">
+                    <a href="{{ route('cart.index') }}" class="text-white hover:text-yellow-400 transition">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h18v18H3V3z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5H20M7 13l-1.5 7h11L17 13M9 21a1 1 0 11-2 0 1 1 0 012 0zm10 0a1 1 0 11-2 0 1 1 0 012 0z" />
                         </svg>
                     </a>
                 </div>
 
-                <div class="ml-3 relative">
+                <!-- Dropdown -->
+                <div class="relative">
                     <x-dropdown align="right" width="48">
                         <x-slot name="trigger">
                             @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
@@ -82,6 +82,7 @@
                 </div>
             </div>
 
+
             <!-- Hamburger -->
             <div class="-mr-2 flex items-center sm:hidden">
                 <button @click="open = !open" class="p-2 text-white rounded-md hover:bg-[#4c1d95] focus:outline-none focus:bg-[#3b1a80]">
@@ -99,6 +100,18 @@
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')" class="text-white hover:text-yellow-400">
                 {{ __('Dashboard') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link href="{{ route('jenis.index') }}" :active="request()->routeIs('jenis.index')" class="text-white hover:text-yellow-400">
+                {{ __('JENIS') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link href="{{ route('aquarium.index') }}" :active="request()->routeIs('aquarium.index')" class="text-white hover:text-yellow-400">
+                {{ __('AQUARIUM') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link href="{{ route('perawatan.index') }}" :active="request()->routeIs('perawatan.index')" class="text-white hover:text-yellow-400">
+                {{ __('PERAWATAN') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link href="{{ route('aksesoris.index') }}" :active="request()->routeIs('aksesoris.index')" class="text-white hover:text-yellow-400">
+                {{ __('AKSESORIS') }}
             </x-responsive-nav-link>
         </div>
         <div class="pt-4 pb-1 border-t border-[#1e293b]">

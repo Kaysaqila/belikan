@@ -6,8 +6,8 @@
             @foreach ($paymentMethods as $key => $name)
                 <li>
                     <button wire:click="selectMethod('{{ $key }}')"
-                            class="w-full px-4 py-2 border rounded 
-                            {{ $selectedMethod === $key ? 'bg-blue-500 text-white' : 'bg-gray-100 hover:bg-gray-200' }}">
+                        class="w-full px-4 py-2 border rounded
+                        {{ $selectedMethod === $key ? 'bg-blue-500 text-white' : 'bg-gray-100 text-gray-800 hover:bg-gray-200' }}">
                         {{ $name }}
                     </button>
                 </li>

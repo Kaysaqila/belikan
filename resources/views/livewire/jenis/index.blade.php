@@ -57,16 +57,30 @@
 
 <div class="grid grid-cols-4 gap-8 m-4 p-4">
     @forelse($products as $product)
-        <a href="{{ route('jenis.show', $product->id) }}" class="block">
-            <div class="zoom bg-white rounded-lg shadow-md overflow-hidden border border-gray-200 dark:bg-gray-800 dark:border-gray-700 m-2 p-2 hover:shadow-lg transition-shadow" 
-                data-aos="fade-up" data-aos-anchor-placement="center-bottom">
-                <div class="w-full h-40 bg-gray-100 flex items-center justify-center">
-                    <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="w-full h-full object-cover">
+        <a href="{{ route('jenis.show', $product->id) }}" 
+            class="block {{ $product->stock <= 0 }}"> <!-- ? 'pointer-events-none' : '' -->
+            <div 
+                class="relative bg-white rounded-lg shadow-md overflow-hidden border border-gray-200 dark:bg-gray-800 dark:border-gray-700 m-2 p-2 hover:shadow-lg transition-shadow {{ $product->stock <= 0 ? 'opacity-50 grayscale' : '' }}" 
+                data-aos="fade-up" 
+                data-aos-anchor-placement="center-bottom">
+                
+                <div class="relative">
+                    {{-- Badge Sold Out --}}
+                    @if ($product->stock == 0)
+                        <div class="absolute mt-2 ml-2 z-10 bg-red-700 text-white text-s font-bold px-3 py-2 rounded shadow">
+                            SOLD OUT
+                        </div>
+                    @endif
+
+                    {{-- Gambar Produk --}}
+                    <img src="{{ asset('storage/' . $product->image) }}" class="w-full h-48 object-cover z-0" alt="{{ $product->name }}">
                 </div>
-                <div class="p-4 text-center">
-                    <h3 class="text-lg font-semibold text-black-800 dark:text-black-100">{{ $product->name }}</h3>
-                    <p class="text-sm text-black-600 dark:text-black-300 mt-2">Price: Rp{{ number_format($product->price, 0, ',', '.') }}</p>
-                    <p class="text-sm text-black-600 dark:text-black-300">Stock: {{ $product->stock }}</p>
+
+                {{-- Info Produk --}}
+                <div class="text-center p-4">
+                    <h5 class="text-lg font-semibold text-gray-800 dark:text-black">{{ $product->name }}</h5>
+                    <p class="text-gray-600 dark:text-black">Rp{{ number_format($product->price, 0, ',', '.') }}</p>
+                    <p class="text-sm text-muted">Sisa stok: {{ $product->stock }}</p>
                 </div>
             </div>
         </a>

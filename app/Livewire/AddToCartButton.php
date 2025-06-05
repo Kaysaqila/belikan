@@ -26,12 +26,14 @@ class AddToCartButton extends Component
                 'user_id' => Auth::id(),
                 'product_id' => $this->productId,
                 'quantity' => 1,
-                //'added_at' => now(),
             ]);
         }
 
         // Emit ke parent atau komponen lain
         $this->dispatch('cartUpdated');
+
+        // Tambahkan baris ini untuk pop up
+        $this->dispatch('cart-added');
     }
 
     public function render()
