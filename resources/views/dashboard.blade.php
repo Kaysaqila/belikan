@@ -39,8 +39,18 @@
                             <div class="d-flex flex-wrap justify-content-center gap-4">
                                 @foreach ($productChunk as $product)
                                 <a href="{{ route('jenis.show', $product->id) }}" class="text-decoration-none">
-                                    <div class="card p-3" style="width: 16rem;">
+                                    <div class="card position-relative p-3" style="width: 16rem;">
+                                        {{-- Gambar Produk --}}
                                         <img src="{{ asset('storage/' . $product->image) }}" class="card-img-top" alt="{{ $product->name }}" style="height: 200px; object-fit: cover;">
+
+                                        {{-- Badge Sold Out --}}
+                                        @if ($product->stock == 0)
+                                            <div class="position-absolute top-0 start-0 bg-danger text-white px-2 py-1 rounded-end">
+                                                Sold Out
+                                            </div>
+                                        @endif
+
+                                        {{-- Konten --}}
                                         <div class="card-body text-center">
                                             <h5 class="card-title">{{ $product->name }}</h5>
                                             <p class="card-text">Rp{{ number_format($product->price, 0, ',', '.') }}</p>
