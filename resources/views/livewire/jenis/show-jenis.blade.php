@@ -3,11 +3,13 @@
     <p class="text-gray-600 mb-2">Stok Tersedia: {{ $product->stock }}</p>
 
     @if ($product->stock > 0)
-        {{-- Increment/Decrement --}}
+        {{-- Increment/Decrement dengan disable --}}
         <div class="flex items-center gap-2 mb-4">
-            <button wire:click="decrementQuantity" class="px-3 py-1 bg-gray-200 rounded text-lg">-</button>
+            <button wire:click="decrementQuantity" class="px-3 py-1 bg-gray-200 rounded text-lg"
+                {{ $quantity <= 1 ? 'disabled' : '' }}>-</button>
             <span class="text-lg font-semibold">{{ $quantity }}</span>
-            <button wire:click="incrementQuantity" class="px-3 py-1 bg-gray-200 rounded text-lg">+</button>
+            <button wire:click="incrementQuantity" class="px-3 py-1 bg-gray-200 rounded text-lg"
+                {{ $quantity >= $product->stock ? 'disabled' : '' }}>+</button>
         </div>
 
         {{-- Subtotal --}}
@@ -16,7 +18,10 @@
         </p>
 
         {{-- Tombol Add --}}
-        <livewire:add-to-cart-button :productId="$product->id" />
+        <button wire:click="addToCart"
+            class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded mb-2">
+            + Keranjang
+        </button>
     @else
         <div class="text-red-600 font-semibold mb-4">Stok habis</div>
 
@@ -29,32 +34,11 @@
         </button>
     @endif
 
+    {{-- Pesan error --}}
     @if (session()->has('error'))
         <div class="mb-4 p-3 bg-red-100 text-red-700 rounded">
             {{ session('error') }}
         </div>
     @endif
-
-   <!-- Pop up berhasil ditambahkan -->
-    <div id="cart-popup"
-        style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; z-index:9999; background:rgba(0,0,0,0.2);"
-        class="flex items-center justify-center">
-        <div class="bg-white rounded-lg shadow-lg px-8 py-6 flex flex-col items-center">
-            <!-- Checklist hijau SVG -->
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mb-2 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <circle cx="12" cy="12" r="10" fill="#22c55e"/>
-                <path stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" d="M8 12l2.5 2.5L16 9"/>
-            </svg>
-            <span class="text-lg font-semibold text-gray-800">Berhasil ditambahkan ke keranjang!</span>
-        </div>
-    </div>
-    <script>
-        window.addEventListener('cart-added', function () {
-            var popup = document.getElementById('cart-popup');
-            popup.style.display = 'flex';
-            setTimeout(function () {
-                popup.style.display = 'none';
-            }, 2000);
-        });
-    </script>
+ 
 </div>

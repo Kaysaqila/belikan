@@ -43,6 +43,48 @@
             <!-- Page Content -->
             <main>
                 {{ $slot }}
+                   <div id="cart-popup"
+                    style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; z-index:9999; background:rgba(0,0,0,0.2);"
+                    class="flex items-center justify-center">
+                    <div class="bg-white rounded-lg shadow-lg px-8 py-6 flex flex-col items-center transition-opacity duration-300 ease-in-out opacity-0 transform -translate-y-4"
+                        id="cart-popup-content">
+                        <!-- Checklist hijau SVG -->
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mb-2 text-green-500" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <circle cx="12" cy="12" r="10" fill="#22c55e" />
+                            <path stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+                                d="M8 12l2.5 2.5L16 9" />
+                        </svg>
+                        <span class="text-lg font-semibold text-gray-800">Berhasil ditambahkan ke keranjang!</span>
+                    </div>
+                </div>
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        window.addEventListener('product-added-to-cart', function(event) {
+                            const popup = document.getElementById('cart-popup');
+                            const content = document.getElementById('cart-popup-content');
+                            if (!popup || !content) return;
+
+                            // Tampilkan popup
+                            popup.style.display = 'flex';
+
+                            // Animasi masuk
+                            setTimeout(() => {
+                                content.classList.remove('opacity-0', '-translate-y-4');
+                                content.classList.add('opacity-100', 'translate-y-0');
+                            }, 10);
+
+                            // Sembunyikan popup setelah 2 detik
+                            setTimeout(() => {
+                                content.classList.add('opacity-0', '-translate-y-4');
+                                content.classList.remove('opacity-100', 'translate-y-0');
+                                setTimeout(() => {
+                                    popup.style.display = 'none';
+                                }, 300); // waktu animasi keluar
+                            }, 1000);
+                        });
+                    });
+                </script>
             </main>
         </div>
 

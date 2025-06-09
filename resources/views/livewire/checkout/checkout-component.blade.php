@@ -83,7 +83,9 @@
 
         @if ($showVoucher)
             <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-                @livewire('checkout.voucher', ['total' => $total])
+                <div class="bg-white text-black p-6 rounded-lg max-w-lg w-full shadow-lg">
+                    @livewire('checkout.voucher', ['total' => $total])
+                </div>
             </div>
         @endif
         @error('voucherCode')
@@ -132,7 +134,9 @@
             @endphp
             @if ($showEditPayment)
                 <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-                    @livewire('checkout.edit-payment-method')
+                    <div class="bg-white text-black p-6 rounded-lg max-w-lg w-full shadow-lg">
+                        @livewire('checkout.edit-payment-method')
+                    </div>
                 </div>
             @endif
         </div>

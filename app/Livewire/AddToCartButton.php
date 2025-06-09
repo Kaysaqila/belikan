@@ -28,12 +28,6 @@ class AddToCartButton extends Component
                 'quantity' => 1,
             ]);
         }
-
-        // Emit ke parent atau komponen lain
-        $this->dispatch('cartUpdated');
-
-        // Tambahkan baris ini untuk pop up
-        $this->dispatch('cart-added');
     }
 
     public function render()

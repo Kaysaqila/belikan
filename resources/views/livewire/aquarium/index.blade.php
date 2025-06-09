@@ -40,24 +40,34 @@
         </div>
     </form>
 
-    <!-- Products Grid -->
     <div class="grid grid-cols-4 gap-8 m-4 p-4">
         @forelse($products as $product)
-            <a href="{{ route('aquarium.show', $product->id) }}" class="block">
-                <div class="zoom bg-white rounded-lg shadow-md overflow-hidden border border-gray-200 dark:bg-gray-800 dark:border-gray-700 m-2 p-2 hover:shadow-lg transition-shadow" 
+            <a href="{{ route('jenis.show', $product->id) }}" 
+            class="block {{ $product->stock <= 0 ? 'pointer-events-none' : '' }}">
+                <div 
+                    class="zoom bg-white rounded-lg shadow-md overflow-hidden border border-gray-200 m-2 p-2 hover:shadow-lg transition-shadow {{ $product->stock <= 0 ? 'opacity-50 grayscale' : '' }}"
                     data-aos="fade-up" data-aos-anchor-placement="center-bottom">
-                    <div class="w-full h-40 bg-gray-100 flex items-center justify-center">
+                    
+                    {{-- Gambar Produk + Badge --}}
+                    <div class="relative w-full h-40 bg-gray-100 flex items-center justify-center">
+                        @if ($product->stock == 0)
+                            <div class="absolute top-2 left-2 z-10 bg-red-700 text-white text-xs font-bold px-3 py-1 rounded shadow">
+                                SOLD OUT
+                            </div>
+                        @endif
                         <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="w-full h-full object-cover">
                     </div>
+
+                    {{-- Informasi Produk --}}
                     <div class="p-4 text-center">
-                        <h3 class="text-lg font-semibold text-black-800 dark:text-black-100">{{ $product->name }}</h3>
-                        <p class="text-sm text-black-600 dark:text-black-300 mt-2">Price: Rp{{ number_format($product->price, 0, ',', '.') }}</p>
-                        <p class="text-sm text-black-600 dark:text-black-300">Stock: {{ $product->stock }}</p>
+                        <h3 class="text-lg font-semibold text-gray-800">{{ $product->name }}</h3>
+                        <p class="text-sm text-gray-600 mt-2">Rp{{ number_format($product->price, 0, ',', '.') }}</p>
+                        <p class="text-sm text-gray-600">Stock: {{ $product->stock }}</p>
                     </div>
                 </div>
             </a>
         @empty
-            <div class="col-span-full text-center text-gray-500 dark:text-gray-400">
+            <div class="col-span-full text-center text-gray-500">
                 Tidak ada produk dalam kategori ini.
             </div>
         @endforelse
